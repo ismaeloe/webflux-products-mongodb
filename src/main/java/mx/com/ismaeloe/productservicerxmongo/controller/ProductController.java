@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import mx.com.ismaeloe.productservicerxmongo.dto.ProductDto;
@@ -27,7 +28,30 @@ public class ProductController {
 	public Flux<ProductDto> all() {
 		return this.service.getAll();
 	}
-	
+
+	/*
+	 * PATH
+	 * between /range?min=100&max=300
+	 * 					>100 && <300
+	 */
+	@GetMapping(value = "/between/{min}-{max}")
+	public Flux<ProductDto> getByBetween(@PathVariable("min") int min ,
+										 @PathVariable("max") int max)
+	{
+		return this.service.getProductByPriceBetween(min, max);
+	}
+
+	/* QUERY
+	 * Range /range?min=100&max=300
+	 * 				>=100 && <=300
+	 */
+	@GetMapping("/range")
+	public Flux<ProductDto> getByPriceRange(@RequestParam("min") int min ,
+											@RequestParam("max") int max)
+	{
+		return this.service.getProductByPriceRange(min, max);
+	}
+
 	/*
 	 * Error with
 	 * @GetMapping("{id}") Error java.lang.IllegalArgumentException: The given id must not be null!

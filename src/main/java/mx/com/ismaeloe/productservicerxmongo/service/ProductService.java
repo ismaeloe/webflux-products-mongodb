@@ -1,6 +1,7 @@
 package mx.com.ismaeloe.productservicerxmongo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Range;
 import org.springframework.stereotype.Service;
 
 import mx.com.ismaeloe.productservicerxmongo.dto.ProductDto;
@@ -22,6 +23,16 @@ public class ProductService {
 								.map( EntityDtoUtil::toDto );
 	}
 	
+	public Flux<ProductDto> getProductByPriceBetween(int min, int max) {
+		return this.repository.findByPriceBetween(min, max)		// Exclusive > 1 &&  < 10
+								.map( EntityDtoUtil::toDto );
+	}
+
+	public Flux<ProductDto> getProductByPriceRange(int min, int max) {
+		return this.repository.findByPriceBetween(Range.closed(min, max)) 	//		Inclusive >=1 && =< 10
+								.map( EntityDtoUtil::toDto ); //Range.open(1, 10) 	Exclusive > 1 &&  < 10 
+	}
+
 	public Mono<ProductDto> getProductById(String id) {
 		return this.repository.findById(id)
 								.map( EntityDtoUtil::toDto );
