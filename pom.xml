@@ -67,9 +67,9 @@
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<!-- We commment to use in Development, Not Only for Testing-
+			<!-- Return to TEST
+				 We commment to use in Development, Not Only for Testing -->
 			<scope>test</scope>
-			-->
 		</dependency>
 
 	</dependencies>
